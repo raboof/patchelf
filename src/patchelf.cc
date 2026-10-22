@@ -206,7 +206,10 @@ static FileContents readFile(const std::string & fileName,
     while ((portion = read(fd, contents->data() + bytesRead, size - bytesRead)) > 0)
         bytesRead += portion;
 
-    close(fd);
+
+    fprintf(stderr, "YYY closing\n");
+    if (close(fd) == -1)
+        error("close");
 
     if (bytesRead != size)
         throw SysError(fmt("reading '", fileName, "'"));
